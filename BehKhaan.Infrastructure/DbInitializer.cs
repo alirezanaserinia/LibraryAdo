@@ -17,13 +17,6 @@ namespace BehKhaan.Infrastructure
     {
         private readonly IBookProcedure _bookProcedure;
 
-        /*private const string DB_NAME = "BehKhaanLibrary";
-        private const string USER_TABLE_NAME = "_User";
-        private const string BOOK_TABLE_NAME = "_Book";
-        private const string SHELF_TABLE_NAME = "_Shelf";
-        private const string INSERT_NEW_BOOK_PROCEDURE_NAME = "";
-        private const string GET_BOOKS_PROCEDURE_NAME = "spGetBooks";*/
-
         private static string CS = AppSettings.GetDefaultConnectionString();
 
         public DbInitializer(IBookProcedure bookProcedure)
@@ -40,7 +33,7 @@ namespace BehKhaan.Infrastructure
 
         }
 
-        private static void CreateDb()
+        private void CreateDb()
         {
             string serverCS = AppSettings.GetServerConnectionString();
             using (SqlConnection connection = new SqlConnection(serverCS))
@@ -53,7 +46,7 @@ namespace BehKhaan.Infrastructure
             }
         }
 
-        private static void UseDb()
+        private void UseDb()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
@@ -64,7 +57,7 @@ namespace BehKhaan.Infrastructure
             }
         }
 
-        private static void CreateTables()
+        private void CreateTables()
         {
             CreateUserTable();
             CreateBookTable();
@@ -72,7 +65,7 @@ namespace BehKhaan.Infrastructure
             CreateBookShelfTable();
         }
 
-        private static void CreateUserTable()
+        private void CreateUserTable()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
@@ -89,7 +82,7 @@ namespace BehKhaan.Infrastructure
             }
         }
 
-        private static void CreateBookTable()
+        private void CreateBookTable()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
@@ -108,7 +101,7 @@ namespace BehKhaan.Infrastructure
             }
         }
 
-        private static void CreateShelfTable()
+        private void CreateShelfTable()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
@@ -126,7 +119,7 @@ namespace BehKhaan.Infrastructure
             }
         }
 
-        private static void CreateBookShelfTable()
+        private void CreateBookShelfTable()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
@@ -148,119 +141,23 @@ namespace BehKhaan.Infrastructure
 
         private void CreateProcedures()
         {
-            // Book 
+            // BookProcedure 
             _bookProcedure.CreateInsertBookProcedure();
             _bookProcedure.CreateGetBooksProcedure();
             _bookProcedure.CreateEditBookProcedure();
             _bookProcedure.CreateRemoveBookProcedure();
             _bookProcedure.CreateGetBookByIdProcedure();
-            /*
-            CreateInsertBookProcedure();
-            CreateGetBooksProcedure();
-            CreateEditBookProcedure();
-            CreateRemoveBookProcedure();
-            CreateGetBookByIdProcedure();
-            */
-            // User
+
+            // UserProcedure 
+
+
+            // ShelfProcedure 
+            
+            
+            // Book_ShelfProcedure 
 
 
         }
-
-        /*
-        private static void CreateInsertBookProcedure()
-        {
-            using (SqlConnection connection = new SqlConnection(CS))
-            {
-                string queryString = @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='spInsertBook' and xtype='P')
-                                        EXEC(
-	                                        'CREATE PROCEDURE spInsertBook 
-                                                       (    @ISBN VARCHAR(40), 
-									                        @Name VARCHAR(40),
-									                        @Rate INTEGER,
-									                        @Price INTEGER)
-	                                        AS
-	                                        INSERT INTO _Book VALUES(NEWID(), @ISBN, @Name, @Rate, @Price)')";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        private static void CreateGetBooksProcedure()
-        {
-            using (SqlConnection connection = new SqlConnection(CS))
-            {
-                string queryString = @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='spGetBooks' and xtype='P')
-                                        EXEC(
-	                                        'CREATE PROCEDURE spGetBooks
-	                                        AS
-	                                        SELECT * FROM _Book')";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        private static void CreateEditBookProcedure()
-        {
-            using (SqlConnection connection = new SqlConnection(CS))
-            {
-                string queryString = @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='spEditBook' and xtype='P')
-                                        EXEC(
-	                                        'CREATE PROCEDURE spEditBook    
-						                                (	@Id UNIQUEIDENTIFIER,    
-							                                @ISBN VARCHAR(40), 
-							                                @Name VARCHAR(40),
-							                                @Rate INTEGER,
-							                                @Price INTEGER)    
-                                            AS    
-                                            BEGIN    
-                                                UPDATE _Book     
-                                                SET ISBN=@ISBN , Name=@Name, Rate=@Rate, Price=@Price    
-                                                WHERE Id=@Id    
-                                            END')";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        private static void CreateRemoveBookProcedure()
-        {
-            using (SqlConnection connection = new SqlConnection(CS))
-            {
-                string queryString = @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='spRemoveBook' and xtype='P')
-                                        EXEC(
-	                                        'CREATE PROCEDURE spRemoveBook    
-				                                        (@Id UNIQUEIDENTIFIER)    
-                                            AS    
-                                            BEGIN    
-                                                DELETE FROM _Book WHERE Id=@Id    
-                                            END ')";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-
-        private static void CreateGetBookByIdProcedure()
-        {
-            using (SqlConnection connection = new SqlConnection(CS))
-            {
-                string queryString = @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='spGetBookById' and xtype='P')
-                                        EXEC(
-	                                        'CREATE PROCEDURE spGetBookById    
-				                                        (@Id UNIQUEIDENTIFIER)    
-                                            AS    
-                                            BEGIN    
-                                                SELECT * FROM _Book WHERE Id=@Id    
-                                            END ')";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
-        }
-        */
 
 
     }
