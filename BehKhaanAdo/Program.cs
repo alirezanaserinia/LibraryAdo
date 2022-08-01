@@ -18,10 +18,12 @@ namespace BehKhaanAdo
         static void Main(string[] args)
         {
             IBookRepository bookRepo = new BookRepository();
+            IUserRepository userRepo = new UserRepository();
             IBookProcedure bookProcedure = new BookProcedure();
+            IUserProcedure userProcedure = new UserProcedure();
 
             // Initialize database 
-            DbInitializer dbInitializer = new DbInitializer(bookProcedure);
+            DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure);
             dbInitializer.Seed();
 
             string? mainMenuItem;
@@ -37,7 +39,53 @@ namespace BehKhaanAdo
                     entityMenuItem = Console.ReadLine();
                     if (entityMenuItem == "1")
                     {
+                        Console.Write(ShowUserInsertMenu());
+                        string[] userInsertInputs = Console.ReadLine().Split(" ");
+                        User newUser = new User
+                        {
+                            UserName = userInsertInputs[0],
+                            FullName = userInsertInputs[1],
+                        };
+                        userRepo.Insert(newUser);
+                        Console.WriteLine("The user was successfully inserted\n");
+                    }
+                    else if (entityMenuItem == "2")
+                    {
+                        string userTable = DataUtils.DataTableToString(userRepo.GetAll());
+                        Console.Write(userTable);
+                    }
+                    else if (entityMenuItem == "3")
+                    {
+                        Console.Write(ShowUserEditMenu());
+                        string[] userEditInputs = Console.ReadLine().Split(" ");
+                        User newUser = new User
+                        {
+                            Id = userEditInputs[0],
+                            UserName = userEditInputs[1],
+                            FullName = userEditInputs[2]
+                        };
+                        userRepo.Edit(newUser);
+                        Console.WriteLine("The user was successfully edited\n");
+                    }
+                    else if (entityMenuItem == "4")
+                    {
+                        Console.Write(ShowUserRemoveMenu());
+                        string userRemoveInput = Console.ReadLine();
+                        userRepo.Remove(userRemoveInput);
+                        Console.WriteLine("The user was successfully removed\n");
+                    }
+                    else if (entityMenuItem == "5")
+                    {
+                        Console.Write(ShowUserGetByIdMenu());
+                        string userGetByIdInput = Console.ReadLine();
 
+                        string user = DataUtils.DataTableToString(userRepo.GetById(userGetByIdInput));
+                        Console.Write(user);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no such option!\n");
                     }
                 }
                 else if (mainMenuItem == "2") // Book
@@ -158,6 +206,38 @@ namespace BehKhaanAdo
         {
             StringBuilder sbuf = new StringBuilder();
             sbuf.Append("Enter BookId\n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowUserInsertMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter UserName and FullName in order and with a space \n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowUserGetByIdMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter UserId\n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowUserEditMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter UserId, new UserName, and new FullName in order and with a space \n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowUserRemoveMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter UserId\n");
 
             return sbuf.ToString();
         }

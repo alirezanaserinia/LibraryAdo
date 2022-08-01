@@ -3,7 +3,6 @@ using BehKhaanAdo.Domain.IRepositories;
 using BehKhaanAdo.Domain.Utils;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,34 +11,34 @@ using System.Threading.Tasks;
 
 namespace BehKhaan.Infrastructure.Repositories
 {
-    public class BookRepository : IBookRepository
+    public class UserRepository : IUserRepository
     {
         private static string CS = AppSettings.GetDefaultConnectionString();
-        public void Edit(Book entity)
+
+        public void Edit(User entity)
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
-                SqlCommand command = new SqlCommand("spEditBook", connection);
+                SqlCommand command = new SqlCommand("spEditUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
                 command.Parameters.AddWithValue("@Id", entity.Id);
-                command.Parameters.AddWithValue("@ISBN", entity.ISBN);
-                command.Parameters.AddWithValue("@Name", entity.Name);
-                command.Parameters.AddWithValue("@Rate", entity.Rate);
-                command.Parameters.AddWithValue("@Price", entity.Price);
+                command.Parameters.AddWithValue("@UserName", entity.UserName);
+                command.Parameters.AddWithValue("@FullName", entity.FullName);
                 command.ExecuteNonQuery();
             }
         }
+
         public DataTable GetAll()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("spGetBooks", connection);
+                SqlDataAdapter adapter = new SqlDataAdapter("spGetUsers", connection);
                 adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-                
-                DataTable bookTable = new DataTable("BookTable");
+
+                DataTable bookTable = new DataTable("UserTable");
                 adapter.Fill(bookTable);
-                
+
                 return bookTable;
             }
         }
@@ -48,28 +47,26 @@ namespace BehKhaan.Infrastructure.Repositories
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("spGetBookById", connection);
+                SqlDataAdapter adapter = new SqlDataAdapter("spGetUserById", connection);
                 adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 adapter.SelectCommand.Parameters.AddWithValue("@Id", id);
 
-                DataTable bookTable = new DataTable("Book");
-                adapter.Fill(bookTable);
+                DataTable userTable = new DataTable("User");
+                adapter.Fill(userTable);
 
-                return bookTable;
+                return userTable;
             }
         }
 
-        public void Insert(Book entity)
+        public void Insert(User entity)
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
-                SqlCommand command = new SqlCommand("spInsertBook", connection);
+                SqlCommand command = new SqlCommand("spInsertUser", connection);
                 connection.Open();
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@ISBN", entity.ISBN);
-                command.Parameters.AddWithValue("@Name", entity.Name);
-                command.Parameters.AddWithValue("@Rate", entity.Rate);
-                command.Parameters.AddWithValue("@Price", entity.Price);
+                command.Parameters.AddWithValue("@UserName", entity.UserName);
+                command.Parameters.AddWithValue("@FullName", entity.FullName);
                 command.ExecuteNonQuery();
             }
         }
@@ -78,7 +75,7 @@ namespace BehKhaan.Infrastructure.Repositories
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
-                SqlCommand command = new SqlCommand("spRemoveBook", connection);
+                SqlCommand command = new SqlCommand("spRemoveUser", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
                 command.Parameters.AddWithValue("@Id", id);

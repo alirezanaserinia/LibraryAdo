@@ -16,12 +16,14 @@ namespace BehKhaan.Infrastructure
     public class DbInitializer
     {
         private readonly IBookProcedure _bookProcedure;
+        private readonly IUserProcedure _userProcedure;
 
         private static string CS = AppSettings.GetDefaultConnectionString();
 
-        public DbInitializer(IBookProcedure bookProcedure)
+        public DbInitializer(IBookProcedure bookProcedure, IUserProcedure userProcedure)
         {
             _bookProcedure = bookProcedure;
+            _userProcedure = userProcedure;
         }
 
         public void Seed()
@@ -142,14 +144,18 @@ namespace BehKhaan.Infrastructure
         private void CreateProcedures()
         {
             // BookProcedure 
-            _bookProcedure.CreateInsertBookProcedure();
-            _bookProcedure.CreateGetBooksProcedure();
             _bookProcedure.CreateEditBookProcedure();
-            _bookProcedure.CreateRemoveBookProcedure();
             _bookProcedure.CreateGetBookByIdProcedure();
+            _bookProcedure.CreateGetBooksProcedure();
+            _bookProcedure.CreateInsertBookProcedure();
+            _bookProcedure.CreateRemoveBookProcedure();
 
             // UserProcedure 
-
+            _userProcedure.CreateEditUserProcedure();
+            _userProcedure.CreateGetUserByIdProcedure();
+            _userProcedure.CreateGetUsersProcedure();
+            _userProcedure.CreateInsertUserProcedure();
+            _userProcedure.CreateRemoveUserProcedure();
 
             // ShelfProcedure 
             
