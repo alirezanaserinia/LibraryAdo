@@ -13,15 +13,15 @@ namespace BehKhaanAdo
     {
         static void Main(string[] args)
         {
-            IBookRepository bookRepo = new BookRepository();
-            IUserRepository userRepo = new UserRepository();
-            IShelfRepository shelfRepo = new ShelfRepository();
-            IBook_ShelfRepository book_ShelfRepo = new Book_ShelfRepository();
-
             IBookProcedure bookProcedure = new BookProcedure();
             IUserProcedure userProcedure = new UserProcedure();
             IShelfProcedure shelfProcedure = new ShelfProcedure();
             IBook_ShelfProcedure book_ShelfProcedure = new Book_ShelfProcedure();
+            
+            IBookRepository bookRepo = new BookRepository();
+            IUserRepository userRepo = new UserRepository();
+            IShelfRepository shelfRepo = new ShelfRepository();
+            IBook_ShelfRepository book_ShelfRepo = new Book_ShelfRepository();
 
             // Initialize database 
             DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure, shelfProcedure, book_ShelfProcedure);
