@@ -54,6 +54,10 @@ namespace BehKhaanAdo
                 {
                     book_ShelfMenu.Handle();
                 }
+                else if (mainMenuItem == "0") // Exit
+                {
+                    break;
+                }
                 else
                 {
                     Console.WriteLine("There is no such option!\n");
@@ -68,7 +72,8 @@ namespace BehKhaanAdo
                             "1. User \n\t" +
                             "2. Book \n\t" +
                             "3. Shelf \n\t" +
-                            "4. Book_Shelf \n");
+                            "4. Book_Shelf \n\t" +
+                            "0. EXIT \n");
             return sbuf.ToString();
         }
     }
