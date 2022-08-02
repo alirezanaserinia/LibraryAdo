@@ -2,11 +2,7 @@
 using BehKhaan.Infrastructure.Interfaces;
 using BehKhaan.Infrastructure.Repositories;
 using BehKhaan.Infrastructure.Services;
-using BehKhaan.Infrastructure.Utils;
-using BehKhaanAdo.Domain.Entities;
 using BehKhaanAdo.Domain.IRepositories;
-using BehKhaanAdo.Domain.Utils;
-using BehKhaanAdo.Menu.Entities;
 using System;
 using System.Data;
 using System.Text;
