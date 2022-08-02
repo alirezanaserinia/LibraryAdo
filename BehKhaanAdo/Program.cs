@@ -26,51 +26,15 @@ namespace BehKhaanAdo
             IUserProcedure userProcedure = new UserProcedure();
             IShelfProcedure shelfProcedure = new ShelfProcedure();
 
-            UserMenu userMenu = new UserMenu(userRepo);
-            BookMenu bookMenu = new BookMenu(bookRepo);
-            ShelfMenu shelfMenu = new ShelfMenu(shelfRepo);
-
             // Initialize database 
             DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure, shelfProcedure);
             dbInitializer.Seed();
 
-            string? mainMenuItem;
-            string? entityMenuItem;
-
-            while (true)
-            {
-                Console.Write(ShowMainMenu());
-                mainMenuItem = Console.ReadLine();
-                if (mainMenuItem == "1") // User
-                {
-                    userMenu.Handle();
-                }
-                else if (mainMenuItem == "2") // Book
-                {
-                    bookMenu.Handle();
-                }
-                else if (mainMenuItem == "3") // Shelf
-                {
-                    shelfMenu.Handle();
-                }
-                else
-                {
-                    Console.WriteLine("There is no such option!\n");
-                }
-            }
+            // Run Application
+            LibraryController controller = new LibraryController(bookRepo, userRepo, shelfRepo);
+            controller.Run();
 
         }
-
-        public static string ShowMainMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter the number of entity you want:\n\t" +
-                            "1. User \n\t" +
-                            "2. Book \n\t" +
-                            "3. Shelf \n");
-            return sbuf.ToString();
-        }
-
 
     }
 }
