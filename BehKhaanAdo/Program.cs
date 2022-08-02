@@ -23,7 +23,7 @@ namespace BehKhaanAdo
 
             // Initialize database 
             DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure, shelfProcedure);
-            dbInitializer.Seed();
+            dbInitializer.Initialize();
 
             // Run Application
             LibraryController controller = new LibraryController(bookRepo, userRepo, shelfRepo);

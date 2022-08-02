@@ -42,6 +42,10 @@ namespace BehKhaanAdo.Menu.Entities
             {
                 GetByIdHandler();
             }
+            else if (item == "6")
+            {
+                // continue meaning back option
+            }
             else
             {
                 Console.WriteLine("There is no such option!\n");
@@ -56,7 +60,8 @@ namespace BehKhaanAdo.Menu.Entities
                             "2. Read all \n\t" +
                             "3. Edit \n\t" +
                             "4. Remove \n\t" +
-                            "5. Read by id\n");
+                            "5. Read by id\n\t" +
+                            "6. Back \n");
 
             return sbuf.ToString();
         }

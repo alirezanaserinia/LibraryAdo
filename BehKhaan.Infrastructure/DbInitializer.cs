@@ -28,7 +28,7 @@ namespace BehKhaan.Infrastructure
             _shelfProcedure = shelfProcedure;
         }
 
-        public void Seed()
+        public void Initialize()
         {
             CreateDb();
             UseDb();
