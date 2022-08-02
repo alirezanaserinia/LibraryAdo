@@ -1,6 +1,6 @@
-﻿using BehKhaanAdo.Domain.Entities;
+﻿using BehKhaanAdo.Domain.AppSettings;
+using BehKhaanAdo.Domain.Entities;
 using BehKhaanAdo.Domain.IRepositories;
-using BehKhaanAdo.Domain.Utils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

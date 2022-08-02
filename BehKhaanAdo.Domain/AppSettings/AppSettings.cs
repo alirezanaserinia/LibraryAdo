@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BehKhaanAdo.Domain.Utils
+namespace BehKhaanAdo.Domain.AppSettings
 {
-    public static class AppSettings
+    public class AppSettings
     {
-        private const string APP_SETTINGS_PATH = @"C:\Users\Alireza\Desktop\ASA\BehKhaanAdo\BehKhaanAdo.Domain\Utils\appsettings.json";
+        private const string APP_SETTINGS_PATH = @"C:\Users\Alireza\Desktop\ASA\BehKhaanAdo\BehKhaanAdo.Domain\AppSettings\appSettings.json";
         public static string GetDefaultConnectionString()
         {
             JObject json = JObject.Parse(File.ReadAllText(APP_SETTINGS_PATH));

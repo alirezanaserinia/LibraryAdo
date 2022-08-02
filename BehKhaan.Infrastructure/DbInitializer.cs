@@ -1,5 +1,5 @@
 ﻿using BehKhaan.Infrastructure.Interfaces;
-using BehKhaanAdo.Domain.Utils;
+using BehKhaanAdo.Domain.AppSettings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

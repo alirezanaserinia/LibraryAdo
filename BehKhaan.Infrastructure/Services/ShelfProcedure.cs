@@ -1,5 +1,5 @@
 ﻿using BehKhaan.Infrastructure.Interfaces;
-using BehKhaanAdo.Domain.Utils;
+using BehKhaanAdo.Domain.AppSettings;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
