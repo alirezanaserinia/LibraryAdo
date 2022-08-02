@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace BehKhaanAdo.Menu.Entities
 {
-    public class UserMenu
+    public class BookMenu
     {
-        private readonly IUserRepository _userRepo;
-        public UserMenu(IUserRepository userRepo)
+        IBookRepository _bookRepo;
+        public BookMenu(IBookRepository bookRepo)
         {
-            _userRepo = userRepo;
+            _bookRepo = bookRepo;
         }
 
         public void Handle()
@@ -61,77 +61,49 @@ namespace BehKhaanAdo.Menu.Entities
             return sbuf.ToString();
         }
 
-        private string ShowInsertMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter UserName and FullName in order and with a space \n");
-
-            return sbuf.ToString();
-        }
-
-        private string ShowGetByIdMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter UserId\n");
-
-            return sbuf.ToString();
-        }
-
-        private string ShowEditMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter UserId, new UserName, and new FullName in order and with a space \n");
-
-            return sbuf.ToString();
-        }
-
-        private string ShowRemoveMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter UserId\n");
-
-            return sbuf.ToString();
-        }
-
         private void InsertHandler()
         {
             Console.Write(ShowInsertMenu());
             string[] insertInputs = Console.ReadLine().Split(" ");
-            User newUser = new User
+            Book newBook = new Book
             {
-                UserName = insertInputs[0],
-                FullName = insertInputs[1],
+                ISBN = insertInputs[0],
+                Name = insertInputs[1],
+                Rate = Int32.Parse(insertInputs[2]),
+                Price = Int32.Parse(insertInputs[3])
             };
-            _userRepo.Insert(newUser);
-            Console.WriteLine("The user was successfully inserted\n");
+            _bookRepo.Insert(newBook);
+            Console.WriteLine("The book was successfully inserted\n");
         }
 
         private void GetAllHandler()
         {
-            string userTable = DataUtils.DataTableToString(_userRepo.GetAll());
-            Console.Write(userTable);
+            string bookTable = DataUtils.DataTableToString(_bookRepo.GetAll());
+            Console.Write(bookTable);
         }
 
         private void EditHandler()
         {
             Console.Write(ShowEditMenu());
             string[] editInputs = Console.ReadLine().Split(" ");
-            User newUser = new User
+            Book newBook = new Book
             {
                 Id = editInputs[0],
-                UserName = editInputs[1],
-                FullName = editInputs[2]
+                ISBN = editInputs[1],
+                Name = editInputs[2],
+                Rate = Int32.Parse(editInputs[3]),
+                Price = Int32.Parse(editInputs[4])
             };
-            _userRepo.Edit(newUser);
-            Console.WriteLine("The user was successfully edited\n");
+            _bookRepo.Edit(newBook);
+            Console.WriteLine("The book was successfully edited\n");
         }
 
         private void RemoveHandler()
         {
             Console.Write(ShowRemoveMenu());
             string removeInput = Console.ReadLine();
-            _userRepo.Remove(removeInput);
-            Console.WriteLine("The user was successfully removed\n");
+            _bookRepo.Remove(removeInput);
+            Console.WriteLine("The book was successfully removed\n");
         }
 
         private void GetByIdHandler()
@@ -139,9 +111,42 @@ namespace BehKhaanAdo.Menu.Entities
             Console.Write(ShowGetByIdMenu());
             string getByIdInput = Console.ReadLine();
 
-            string user = DataUtils.DataTableToString(_userRepo.GetById(getByIdInput));
-            Console.Write(user);
+            string book = DataUtils.DataTableToString(_bookRepo.GetById(getByIdInput));
+            Console.Write(book);
             Console.WriteLine();
         }
+
+        private string ShowInsertMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter ISBN, Name, Rate, and Price in order and with a space \n");
+
+            return sbuf.ToString();
+        }
+
+        private string ShowEditMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter BookId, new ISBN, new Name, new Rate, and new Price in order and with a space \n");
+
+            return sbuf.ToString();
+        }
+
+        private string ShowRemoveMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter BookId\n");
+
+            return sbuf.ToString();
+        }
+
+        private string ShowGetByIdMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter BookId\n");
+
+            return sbuf.ToString();
+        }
+
     }
 }
