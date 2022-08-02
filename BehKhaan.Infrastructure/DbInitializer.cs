@@ -17,13 +17,15 @@ namespace BehKhaan.Infrastructure
     {
         private readonly IBookProcedure _bookProcedure;
         private readonly IUserProcedure _userProcedure;
+        private readonly IShelfProcedure _shelfProcedure;
 
         private static string CS = AppSettings.GetDefaultConnectionString();
 
-        public DbInitializer(IBookProcedure bookProcedure, IUserProcedure userProcedure)
+        public DbInitializer(IBookProcedure bookProcedure, IUserProcedure userProcedure, IShelfProcedure shelfProcedure)
         {
             _bookProcedure = bookProcedure;
             _userProcedure = userProcedure;
+            _shelfProcedure = shelfProcedure;
         }
 
         public void Seed()
@@ -110,7 +112,7 @@ namespace BehKhaan.Infrastructure
                 string queryString = @"IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='_Shelf' and xtype='U')
                                         CREATE TABLE _Shelf (
 		                                    Id UNIQUEIDENTIFIER NOT NULL,
-		                                    ShelfName VARCHAR(40) NOT NULL,
+		                                    Name VARCHAR(40) NOT NULL,
 		                                    UserId UNIQUEIDENTIFIER NOT NULL,
 		                                    CONSTRAINT fk_Shelf_User FOREIGN KEY(UserId) REFERENCES _User(Id),
 		                                    CONSTRAINT pk_Shelf PRIMARY KEY(Id)
@@ -158,7 +160,11 @@ namespace BehKhaan.Infrastructure
             _userProcedure.CreateRemoveUserProcedure();
 
             // ShelfProcedure 
-            
+            _shelfProcedure.CreateEditShelfProcedure();
+            _shelfProcedure.CreateGetShelfByIdProcedure();
+            _shelfProcedure.CreateGetShelfsProcedure();
+            _shelfProcedure.CreateInsertShelfProcedure();
+            _shelfProcedure.CreateRemoveShelfProcedure();
             
             // Book_ShelfProcedure 
 

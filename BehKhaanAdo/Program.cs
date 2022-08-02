@@ -19,11 +19,14 @@ namespace BehKhaanAdo
         {
             IBookRepository bookRepo = new BookRepository();
             IUserRepository userRepo = new UserRepository();
+            IShelfRepository shelfRepo = new ShelfRepository();
+
             IBookProcedure bookProcedure = new BookProcedure();
             IUserProcedure userProcedure = new UserProcedure();
+            IShelfProcedure shelfProcedure = new ShelfProcedure();
 
             // Initialize database 
-            DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure);
+            DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure, shelfProcedure);
             dbInitializer.Seed();
 
             string? mainMenuItem;
@@ -147,7 +150,61 @@ namespace BehKhaanAdo
                         Console.WriteLine("There is no such option!\n");
                     }
                 }
+                else if (mainMenuItem == "3") // Shelf
+                {
+                    Console.Write(ShowEntityMenu());
+                    entityMenuItem = Console.ReadLine();
+                    if (entityMenuItem == "1")
+                    {
+                        Console.Write(ShowShelfInsertMenu());
+                        string[] shelfInsertInputs = Console.ReadLine().Split(" ");
+                        Shelf newShelf = new Shelf
+                        {
+                            Name = shelfInsertInputs[0],
+                            UserId = shelfInsertInputs[1]
+                        };
+                        shelfRepo.Insert(newShelf);
+                        Console.WriteLine("The shelf was successfully inserted\n");
+                    }
+                    else if (entityMenuItem == "2")
+                    {
+                        string shelfTable = DataUtils.DataTableToString(shelfRepo.GetAll());
+                        Console.Write(shelfTable);
+                    }
+                    else if (entityMenuItem == "3")
+                    {
+                        Console.Write(ShowShelfEditMenu());
+                        string[] shelfEditInputs = Console.ReadLine().Split(" ");
+                        Shelf newShelf = new Shelf
+                        {
+                            Id = shelfEditInputs[0],
+                            Name = shelfEditInputs[1],
+                            UserId = shelfEditInputs[2]
+                        };
+                        shelfRepo.Edit(newShelf);
+                        Console.WriteLine("The shelf was successfully edited\n");
+                    }
+                    else if (entityMenuItem == "4")
+                    {
+                        Console.Write(ShowShelfRemoveMenu());
+                        string shelfRemoveInput = Console.ReadLine();
+                        shelfRepo.Remove(shelfRemoveInput);
+                        Console.WriteLine("The shelf was successfully removed\n");
+                    }
+                    else if (entityMenuItem == "5")
+                    {
+                        Console.Write(ShowShelfGetByIdMenu());
+                        string shelfGetByIdInput = Console.ReadLine();
 
+                        string shelf = DataUtils.DataTableToString(shelfRepo.GetById(shelfGetByIdInput));
+                        Console.Write(shelf);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no such option!\n");
+                    }
+                }
 
             }
 
@@ -238,6 +295,38 @@ namespace BehKhaanAdo
         {
             StringBuilder sbuf = new StringBuilder();
             sbuf.Append("Enter UserId\n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowShelfInsertMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter Name and UserId in order and with a space \n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowShelfGetByIdMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter ShelfId\n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowShelfEditMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter ShelfId, new Name, and new UserId in order and with a space \n");
+
+            return sbuf.ToString();
+        }
+
+        public static string ShowShelfRemoveMenu()
+        {
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append("Enter ShelfId\n");
 
             return sbuf.ToString();
         }
