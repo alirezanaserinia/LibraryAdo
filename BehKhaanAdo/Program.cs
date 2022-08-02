@@ -13,7 +13,6 @@ using System.Text;
 
 namespace BehKhaanAdo
 {
-
     class Program
     {
         static void Main(string[] args)
@@ -35,6 +34,5 @@ namespace BehKhaanAdo
             controller.Run();
 
         }
-
     }
 }
