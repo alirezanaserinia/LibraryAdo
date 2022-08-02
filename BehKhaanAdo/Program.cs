@@ -28,6 +28,7 @@ namespace BehKhaanAdo
 
             UserMenu userMenu = new UserMenu(userRepo);
             BookMenu bookMenu = new BookMenu(bookRepo);
+            ShelfMenu shelfMenu = new ShelfMenu(shelfRepo);
 
             // Initialize database 
             DbInitializer dbInitializer = new DbInitializer(bookProcedure, userProcedure, shelfProcedure);
@@ -50,63 +51,13 @@ namespace BehKhaanAdo
                 }
                 else if (mainMenuItem == "3") // Shelf
                 {
-                    Console.Write(ShowEntityMenu());
-                    entityMenuItem = Console.ReadLine();
-                    if (entityMenuItem == "1")
-                    {
-                        Console.Write(ShowShelfInsertMenu());
-                        string[] shelfInsertInputs = Console.ReadLine().Split(" ");
-                        Shelf newShelf = new Shelf
-                        {
-                            Name = shelfInsertInputs[0],
-                            UserId = shelfInsertInputs[1]
-                        };
-                        shelfRepo.Insert(newShelf);
-                        Console.WriteLine("The shelf was successfully inserted\n");
-                    }
-                    else if (entityMenuItem == "2")
-                    {
-                        string shelfTable = DataUtils.DataTableToString(shelfRepo.GetAll());
-                        Console.Write(shelfTable);
-                    }
-                    else if (entityMenuItem == "3")
-                    {
-                        Console.Write(ShowShelfEditMenu());
-                        string[] shelfEditInputs = Console.ReadLine().Split(" ");
-                        Shelf newShelf = new Shelf
-                        {
-                            Id = shelfEditInputs[0],
-                            Name = shelfEditInputs[1],
-                            UserId = shelfEditInputs[2]
-                        };
-                        shelfRepo.Edit(newShelf);
-                        Console.WriteLine("The shelf was successfully edited\n");
-                    }
-                    else if (entityMenuItem == "4")
-                    {
-                        Console.Write(ShowShelfRemoveMenu());
-                        string shelfRemoveInput = Console.ReadLine();
-                        shelfRepo.Remove(shelfRemoveInput);
-                        Console.WriteLine("The shelf was successfully removed\n");
-                    }
-                    else if (entityMenuItem == "5")
-                    {
-                        Console.Write(ShowShelfGetByIdMenu());
-                        string shelfGetByIdInput = Console.ReadLine();
-
-                        string shelf = DataUtils.DataTableToString(shelfRepo.GetById(shelfGetByIdInput));
-                        Console.Write(shelf);
-                        Console.WriteLine();
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no such option!\n");
-                    }
+                    shelfMenu.Handle();
                 }
-
+                else
+                {
+                    Console.WriteLine("There is no such option!\n");
+                }
             }
-
-
 
         }
 
@@ -120,50 +71,6 @@ namespace BehKhaanAdo
             return sbuf.ToString();
         }
 
-        public static string ShowEntityMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("What do you want to do?\n\t" +
-                            "1. Insert \n\t" +
-                            "2. Read all \n\t" +
-                            "3. Edit \n\t" +
-                            "4. Remove \n\t" +
-                            "5. Read by id\n");
-
-            return sbuf.ToString();
-        }
-
-        public static string ShowShelfInsertMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter Name and UserId in order and with a space \n");
-
-            return sbuf.ToString();
-        }
-
-        public static string ShowShelfGetByIdMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter ShelfId\n");
-
-            return sbuf.ToString();
-        }
-
-        public static string ShowShelfEditMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter ShelfId, new Name, and new UserId in order and with a space \n");
-
-            return sbuf.ToString();
-        }
-
-        public static string ShowShelfRemoveMenu()
-        {
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.Append("Enter ShelfId\n");
-
-            return sbuf.ToString();
-        }
 
     }
 }
