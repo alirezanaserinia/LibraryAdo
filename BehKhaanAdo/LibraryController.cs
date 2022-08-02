@@ -13,12 +13,15 @@ namespace BehKhaanAdo
         IBookRepository _bookRepo;
         IUserRepository _userRepo;
         IShelfRepository _shelfRepo;
+        IBook_ShelfRepository _book_ShelfRepo;
 
-        public LibraryController(IBookRepository bookRepo, IUserRepository userRepo, IShelfRepository shelfRepo)
+        public LibraryController(IBookRepository bookRepo, IUserRepository userRepo, 
+            IShelfRepository shelfRepo, IBook_ShelfRepository book_ShelfRepo)
         {
             _bookRepo = bookRepo;
             _userRepo = userRepo;
             _shelfRepo = shelfRepo;
+            _book_ShelfRepo = book_ShelfRepo;
         }
 
         public void Run()
@@ -28,6 +31,7 @@ namespace BehKhaanAdo
             UserMenu userMenu = new UserMenu(_userRepo);
             BookMenu bookMenu = new BookMenu(_bookRepo);
             ShelfMenu shelfMenu = new ShelfMenu(_shelfRepo);
+            Book_ShelfMenu book_ShelfMenu = new Book_ShelfMenu(_book_ShelfRepo);
 
             while (true)
             {
@@ -46,6 +50,10 @@ namespace BehKhaanAdo
                 {
                     shelfMenu.Handle();
                 }
+                else if (mainMenuItem == "4") // Book_Shelf
+                {
+                    book_ShelfMenu.Handle();
+                }
                 else
                 {
                     Console.WriteLine("There is no such option!\n");
@@ -59,7 +67,8 @@ namespace BehKhaanAdo
             sbuf.Append("Enter the number of entity you want:\n\t" +
                             "1. User \n\t" +
                             "2. Book \n\t" +
-                            "3. Shelf \n");
+                            "3. Shelf \n\t" +
+                            "4. Book_Shelf \n");
             return sbuf.ToString();
         }
     }

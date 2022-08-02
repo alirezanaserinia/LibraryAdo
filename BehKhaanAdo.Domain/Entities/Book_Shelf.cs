@@ -8,8 +8,9 @@ namespace BehKhaanAdo.Domain.Entities
 {
     public class Book_Shelf
     {
-        public string ISBN { get; set; }
-        public int ShelfId { get; set; }
+        public string BookId { get; set; }
+        public string ShelfId { get; set; }
         public int StudyState { get; set; }
+        public DateTime PuttingTime { get; set; }
     }
 }

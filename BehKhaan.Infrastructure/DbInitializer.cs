@@ -18,14 +18,17 @@ namespace BehKhaan.Infrastructure
         private readonly IBookProcedure _bookProcedure;
         private readonly IUserProcedure _userProcedure;
         private readonly IShelfProcedure _shelfProcedure;
+        private readonly IBook_ShelfProcedure _book_ShelfProcedure;
 
         private static string CS = AppSettings.GetDefaultConnectionString();
 
-        public DbInitializer(IBookProcedure bookProcedure, IUserProcedure userProcedure, IShelfProcedure shelfProcedure)
+        public DbInitializer(IBookProcedure bookProcedure, IUserProcedure userProcedure, 
+            IShelfProcedure shelfProcedure, IBook_ShelfProcedure book_ShelfProcedure)
         {
             _bookProcedure = bookProcedure;
             _userProcedure = userProcedure;
             _shelfProcedure = shelfProcedure;
+            _book_ShelfProcedure = book_ShelfProcedure;
         }
 
         public void Initialize()
@@ -66,7 +69,7 @@ namespace BehKhaan.Infrastructure
             CreateUserTable();
             CreateBookTable();
             CreateShelfTable();
-            CreateBookShelfTable();
+            CreateBook_ShelfTable();
         }
 
         private void CreateUserTable()
@@ -123,7 +126,7 @@ namespace BehKhaan.Infrastructure
             }
         }
 
-        private void CreateBookShelfTable()
+        private void CreateBook_ShelfTable()
         {
             using (SqlConnection connection = new SqlConnection(CS))
             {
@@ -165,12 +168,13 @@ namespace BehKhaan.Infrastructure
             _shelfProcedure.CreateGetShelfsProcedure();
             _shelfProcedure.CreateInsertShelfProcedure();
             _shelfProcedure.CreateRemoveShelfProcedure();
-            
+
             // Book_ShelfProcedure 
-
-
+            _book_ShelfProcedure.CreateEditBook_ShelfProcedure();
+            _book_ShelfProcedure.CreateGetBook_ShelfByIdProcedure();
+            _book_ShelfProcedure.CreateGetBook_ShelfsProcedure();
+            _book_ShelfProcedure.CreateInsertBook_ShelfProcedure();
+            _book_ShelfProcedure.CreateRemoveBook_ShelfProcedure();
         }
-
-
     }
 }
