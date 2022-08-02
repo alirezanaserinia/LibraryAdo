@@ -19,60 +19,33 @@ namespace BehKhaanAdo.Menu.Entities
 
         public void Handle()
         {
-
             Console.Write(ShowMenu());
             string item = Console.ReadLine();
+
             if (item == "1")
             {
-                Console.Write(ShowInsertMenu());
-                string[] insertInputs = Console.ReadLine().Split(" ");
-                User newUser = new User
-                {
-                    UserName = insertInputs[0],
-                    FullName = insertInputs[1],
-                };
-                _userRepo.Insert(newUser);
-                Console.WriteLine("The user was successfully inserted\n");
+                InsertHandler();
             }
             else if (item == "2")
             {
-                string userTable = DataUtils.DataTableToString(_userRepo.GetAll());
-                Console.Write(userTable);
+                GetAllHandler();
             }
             else if (item == "3")
             {
-                Console.Write(ShowEditMenu());
-                string[] userEditInputs = Console.ReadLine().Split(" ");
-                User newUser = new User
-                {
-                    Id = userEditInputs[0],
-                    UserName = userEditInputs[1],
-                    FullName = userEditInputs[2]
-                };
-                _userRepo.Edit(newUser);
-                Console.WriteLine("The user was successfully edited\n");
+                EditHandler();
             }
             else if (item == "4")
             {
-                Console.Write(ShowRemoveMenu());
-                string userRemoveInput = Console.ReadLine();
-                _userRepo.Remove(userRemoveInput);
-                Console.WriteLine("The user was successfully removed\n");
+                RemoveHandler();
             }
             else if (item == "5")
             {
-                Console.Write(ShowGetByIdMenu());
-                string userGetByIdInput = Console.ReadLine();
-
-                string user = DataUtils.DataTableToString(_userRepo.GetById(userGetByIdInput));
-                Console.Write(user);
-                Console.WriteLine();
+                GetByIdHandler();
             }
             else
             {
                 Console.WriteLine("There is no such option!\n");
             }
-
         }
 
         private string ShowMenu()
@@ -120,5 +93,57 @@ namespace BehKhaanAdo.Menu.Entities
             return sbuf.ToString();
         }
 
+        private void InsertHandler()
+        {
+            Console.Write(ShowInsertMenu());
+            string[] insertInputs = Console.ReadLine().Split(" ");
+            User newUser = new User
+            {
+                UserName = insertInputs[0],
+                FullName = insertInputs[1],
+            };
+            _userRepo.Insert(newUser);
+            Console.WriteLine("The user was successfully inserted\n");
+        }
+
+        private void GetAllHandler()
+        {
+            string userTable = DataUtils.DataTableToString(_userRepo.GetAll());
+            Console.Write(userTable);
+        }
+
+        private void EditHandler()
+        {
+            Console.Write(ShowEditMenu());
+            string[] userEditInputs = Console.ReadLine().Split(" ");
+            User newUser = new User
+            {
+                Id = userEditInputs[0],
+                UserName = userEditInputs[1],
+                FullName = userEditInputs[2]
+            };
+            _userRepo.Edit(newUser);
+            Console.WriteLine("The user was successfully edited\n");
+        }
+
+        private void RemoveHandler()
+        {
+            Console.Write(ShowRemoveMenu());
+            string userRemoveInput = Console.ReadLine();
+            _userRepo.Remove(userRemoveInput);
+            Console.WriteLine("The user was successfully removed\n");
+        }
+
+        private void GetByIdHandler()
+        {
+            Console.Write(ShowGetByIdMenu());
+            string userGetByIdInput = Console.ReadLine();
+
+            string user = DataUtils.DataTableToString(_userRepo.GetById(userGetByIdInput));
+            Console.Write(user);
+            Console.WriteLine();
+        }
+
+        
     }
 }
